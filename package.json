@@ -1,0 +1,19 @@
+{
+  "name": "sha",
+  "version": "0.0.0",
+  "description": "Check and get file hashes",
+  "scripts": {
+    "test": "mocha -R list"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ForbesLindesay/sha.git"
+  },
+  "license": "BSD",
+  "optionalDependencies": {
+    "graceful-fs": "1.2"
+  },
+  "devDependencies": {
+    "mocha": "~1.9.0"
+  }
+}
