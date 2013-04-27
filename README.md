@@ -1,6 +1,12 @@
 # sha
 
-Check and get file hashes
+Check and get file hashes (using any algorithm)
+
+[![Build Status](https://travis-ci.org/ForbesLindesay/sha.png?branch=master)](https://travis-ci.org/ForbesLindesay/sha)
+
+## Installation
+
+    $ npm install sha
 
 ## API
 
