@@ -29,4 +29,4 @@ Options:
 
 ## License
 
-BSD
+You may use this software under the BSD or MIT.  Take your pick.  If you want me to release it under another license, open an issue.
