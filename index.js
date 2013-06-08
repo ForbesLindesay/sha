@@ -1,3 +1,4 @@
+var Transform = require('stream').Transform || require('readable-stream').Transform
 var crypto = require('crypto')
 var fs
 try {
@@ -16,19 +17,20 @@ try {
 
 exports.check = check
 exports.get = get
+exports.stream = stream
 
 function check(file, expected, options, cb) {
   if (typeof options === 'function') {
-    cb = options;
-    options = undefined;
+    cb = options
+    options = undefined
   }
-  expected = expected.toLowerCase().trim();
+  expected = expected.toLowerCase().trim()
   get(file, options, function (er, actual) {
     if (er) {
-      if (er.message) er.message += ' while getting shasum for ' + file;
+      if (er.message) er.message += ' while getting shasum for ' + file
       return cb(er)
     }
-    if (actual === expected) return cb(null);
+    if (actual === expected) return cb(null)
     cb(new Error(
         'shasum check failed for ' + file + '\n'
       + 'Expected: ' + expected + '\n'
@@ -38,11 +40,11 @@ function check(file, expected, options, cb) {
 
 function get(file, options, cb) {
   if (typeof options === 'function') {
-    cb = options;
-    options = undefined;
+    cb = options
+    options = undefined
   }
-  options = options || {};
-  var algorithm = options.algorithm || 'sha1';
+  options = options || {}
+  var algorithm = options.algorithm || 'sha1'
   var hash = crypto.createHash(algorithm)
   var source = fs.createReadStream(file)
   var errState = null
@@ -60,4 +62,28 @@ function get(file, options, cb) {
       var actual = hash.digest("hex").toLowerCase().trim()
       cb(null, actual)
     })
+}
+
+function stream(expected, options) {
+  expected = expected.toLowerCase().trim()
+  options = options || {}
+  var algorithm = options.algorithm || 'sha1'
+  var hash = crypto.createHash(algorithm)
+
+  var stream = new Transform()
+  stream._transform = function (chunk, encoding, callback) {
+    hash.update(chunk)
+    stream.push(chunk)
+    callback()
+  }
+  stream._flush = function (cb) {
+    var actual = hash.digest("hex").toLowerCase().trim()
+    if (actual === expected) return cb(null)
+    cb(new Error(
+        'shasum check failed for:\n'
+      + '  Expected: ' + expected + '\n'
+      + '  Actual:   ' + actual))
+    this.push(null)
+  }
+  return stream
 }
