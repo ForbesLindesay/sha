@@ -1,3 +1,5 @@
+'use strict'
+
 var Transform = require('stream').Transform || require('readable-stream').Transform
 var crypto = require('crypto')
 var fs
@@ -16,7 +18,9 @@ try {
 }
 
 exports.check = check
+exports.checkSync = checkSync
 exports.get = get
+exports.getSync = getSync
 exports.stream = stream
 
 function check(file, expected, options, cb) {
@@ -37,6 +41,24 @@ function check(file, expected, options, cb) {
       + 'Actual:   ' + actual))
   })
 }
+function checkSync(file, expected, options, cb) {
+  expected = expected.toLowerCase().trim()
+  var actual
+  try {
+    actual = getSync(file, options)
+  } catch (er) {
+    if (er.message) er.message += ' while getting shasum for ' + file
+    throw er
+  }
+  if (actual !== expected) {
+    var ex = new Error(
+        'shasum check failed for ' + file + '\n'
+      + 'Expected: ' + expected + '\n'
+      + 'Actual:   ' + actual)
+    throw ex
+  }
+}
+
 
 function get(file, options, cb) {
   if (typeof options === 'function') {
@@ -62,6 +84,15 @@ function get(file, options, cb) {
       var actual = hash.digest("hex").toLowerCase().trim()
       cb(null, actual)
     })
+}
+
+function getSync(file, options) {
+  options = options || {}
+  var algorithm = options.algorithm || 'sha1'
+  var hash = crypto.createHash(algorithm)
+  var source = fs.readFileSync(file)
+  hash.update(source)
+  return hash.digest("hex").toLowerCase().trim()
 }
 
 function stream(expected, options) {

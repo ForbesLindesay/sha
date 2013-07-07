@@ -12,7 +12,7 @@ Check and get file hashes (using any algorithm)
 
 ## API
 
-### check(fileName, expected, [options,] cb)
+### check(fileName, expected, [options,] cb) / checkSync(filename, expected, [options])
 
 Asynchronously check that `fileName` has a "hash" of `expected`.  The callback will be called with either `null` or an error (indicating that they did not match).
 
@@ -20,7 +20,7 @@ Options:
 
 - algorithm: defaults to `sha1` and can be any of the algorithms supported by `crypto.createHash`
 
-### get(fileName, [options,] cb)
+### get(fileName, [options,] cb) / getSync(filename, [options])
 
 Asynchronously get the "hash" of `fileName`.  The callback will be called with an optional `error` object and the (lower cased) hex digest of the hash.
 

@@ -1,3 +1,5 @@
+'use strict'
+
 var sha = require('../')
 var assert = require('assert')
 var read = require('fs').createReadStream
@@ -54,6 +56,46 @@ describe('get', function () {
   })
 })
 
+describe('getSync', function () {
+  describe('(filename)', function () {
+    describe('with a non-existant file', function () {
+      it('results in an error', function () {
+        try {
+          sha.getSync(__dirname + '/non-existant')
+        } catch (err) {
+          assert.equal(err.code, 'ENOENT')
+          return
+        }
+        assert(false, 'Should throw an error')
+      })
+    })
+    describe('with a file', function () {
+      it('results in the `sha1` hash of the file', function () {
+        var hash = sha.getSync(__dirname + '/data')
+        assert.equal(hash, '48cecad55d3233c527421bebdd25f8475234b4d0')
+      })
+    })
+  })
+  describe('(filename, {algorithm: "md5"})', function () {
+    describe('with a non-existant file', function () {
+      it('results in an error', function () {
+        try {
+          sha.getSync(__dirname + '/non-existant', {algorithm: "md5"})
+        } catch (err) {
+          assert.equal(err.code, 'ENOENT')
+          return
+        }
+        assert(false, 'Should throw an error')
+      })
+    })
+    describe('with a file', function () {
+      it('results in the `md5` hash of the file', function () {
+        var hash = sha.getSync(__dirname + '/data', {algorithm: "md5"})
+        assert.equal(hash, 'acb514860386ce1b290f327263b4c2ff')
+      })
+    })
+  })
+})
 
 describe('check', function () {
   describe('(filename, expected, callback(err, hash))', function () {
@@ -118,6 +160,68 @@ describe('check', function () {
   })
 })
 
+describe('checkSync', function () {
+  describe('(filename, expected)', function () {
+    describe('with a non-existant file', function () {
+      it('results in an error', function () {
+        try {
+          sha.checkSync(__dirname + '/non-existant', '48cecad55d3233c527421bebdd25f8475234b4d0')
+        } catch (err) {
+          assert.equal(err.code, 'ENOENT')
+          return
+        }
+        assert(false, 'Should throw an error')
+      })
+    })
+    describe('with the correct hash', function () {
+      it('does not result in an error', function () {
+        sha.checkSync(__dirname + '/data', '48cecad55d3233c527421bebdd25f8475234b4d0')
+      })
+    })
+    describe('with the wrong hash', function () {
+      it('results in an error', function () {
+        try {
+          sha.checkSync(__dirname + '/data', 'acb514860386ce1b290f327263b4c2ff')
+        } catch (err) {
+          assert(err)
+          assert(err instanceof Error)
+          return
+        }
+        assert(false, 'Should throw an error')
+      })
+    })
+  })
+  describe('(filename, expected, {algorithm: "md5"})', function () {
+    describe('with a non-existant file', function () {
+      it('results in an error', function () {
+        try {
+          sha.checkSync(__dirname + '/non-existant', 'acb514860386ce1b290f327263b4c2ff', {algorithm: "md5"})
+        } catch (err) {
+          assert.equal(err.code, 'ENOENT')
+          return
+        }
+        assert(false, 'Should throw an error')
+      })
+    })
+    describe('with the correct hash', function () {
+      it('does not result in an error', function () {
+        sha.checkSync(__dirname + '/data', 'acb514860386ce1b290f327263b4c2ff', {algorithm: "md5"})
+      })
+    })
+    describe('with the wrong hash', function () {
+      it('results in an error', function () {
+        try {
+          sha.checkSync(__dirname + '/data', '48cecad55d3233c527421bebdd25f8475234b4d0', {algorithm: "md5"})
+        } catch (err) {
+          assert(err)
+          assert(err instanceof Error)
+          return
+        }
+        assert(false, 'Should throw an error')
+      })
+    })
+  })
+})
 
 describe('stream', function () {
   describe('.pipe(sha.stream(expected))', function () {
