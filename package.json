@@ -1,6 +1,6 @@
 {
   "name": "sha",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Check and get file hashes",
   "scripts": {
     "test": "mocha -R spec"
@@ -11,7 +11,7 @@
   },
   "license": "BSD",
   "optionalDependencies": {
-    "graceful-fs": "1.2",
+    "graceful-fs": "2",
     "readable-stream": "1.0"
   },
   "devDependencies": {
