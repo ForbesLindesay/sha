@@ -1,6 +1,6 @@
 {
   "name": "sha",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Check and get file hashes",
   "scripts": {
     "test": "mocha -R spec"
