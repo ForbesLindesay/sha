@@ -12,7 +12,7 @@
   "license": "BSD",
   "optionalDependencies": {
     "graceful-fs": "2 || 3",
-    "readable-stream": "1.0"
+    "readable-stream": "~1.1"
   },
   "devDependencies": {
     "mocha": "~1.9.0"
