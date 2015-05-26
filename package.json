@@ -9,7 +9,7 @@
     "type": "git",
     "url": "https://github.com/ForbesLindesay/sha.git"
   },
-  "license": "BSD",
+  "license": "(BSD-2-Clause OR MIT)",
   "optionalDependencies": {
     "graceful-fs": "2 || 3",
     "readable-stream": "~1.1"
