@@ -1,13 +1,8 @@
 'use strict'
 
-var Transform = require('stream').Transform || require('readable-stream').Transform
+var Transform = require('stream').Transform
 var crypto = require('crypto')
-var fs
-try {
-  fs = require('graceful-fs')
-} catch (ex) {
-  fs = require('fs')
-}
+var fs = require('graceful-fs');
 try {
   process.binding('crypto')
 } catch (e) {
