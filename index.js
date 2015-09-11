@@ -2,15 +2,7 @@
 
 var Transform = require('stream').Transform
 var crypto = require('crypto')
-var fs = require('graceful-fs');
-try {
-  process.binding('crypto')
-} catch (e) {
-  var er = new Error( 'crypto binding not found.\n'
-                    + 'Please build node with openssl.\n'
-                    + e.message )
-  throw er
-}
+var fs = require('graceful-fs')
 
 exports.check = check
 exports.checkSync = checkSync
