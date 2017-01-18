@@ -25,11 +25,11 @@ function check(file, expected, options, cb) {
     var err = new Error(
         'shasum check failed for ' + file + '\n'
       + 'Expected: ' + expected + '\n'
-      + 'Actual:   ' + actual);
-    err.expected = expected;
-    err.actual = actual;
-    err.file = file;
-    cb(err);
+      + 'Actual:   ' + actual)
+    err.expected = expected
+    err.actual = actual
+    err.file = file
+    cb(err)
   })
 }
 function checkSync(file, expected, options) {
