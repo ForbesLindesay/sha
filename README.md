@@ -1,5 +1,7 @@
 # sha
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/ForbesLindesay/sha.svg)](https://greenkeeper.io/)
+
 Check and get file hashes (using any algorithm)
 
 [![Build Status](https://img.shields.io/travis/ForbesLindesay/sha/master.svg)](https://travis-ci.org/ForbesLindesay/sha)
