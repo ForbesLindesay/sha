@@ -15,6 +15,6 @@
     "readable-stream": "^2.0.2"
   },
   "devDependencies": {
-    "mocha": "~1.9.0"
+    "mocha": "~3.2.0"
   }
 }
