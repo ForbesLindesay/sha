@@ -12,7 +12,7 @@
   "license": "(BSD-2-Clause OR MIT)",
   "dependencies": {
     "graceful-fs": "^4.1.2",
-    "readable-stream": "^2.0.2"
+    "readable-stream": "^3.0.2"
   },
   "devDependencies": {
     "mocha": "~1.9.0"
