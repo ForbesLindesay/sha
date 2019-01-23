@@ -22,10 +22,14 @@ function check(file, expected, options, cb) {
       return cb(er)
     }
     if (actual === expected) return cb(null)
-    cb(new Error(
+    var err = new Error(
         'shasum check failed for ' + file + '\n'
       + 'Expected: ' + expected + '\n'
-      + 'Actual:   ' + actual))
+      + 'Actual:   ' + actual)
+    err.expected = expected
+    err.actual = actual
+    err.file = file
+    cb(err)
   })
 }
 function checkSync(file, expected, options) {
@@ -97,10 +101,13 @@ function stream(expected, options) {
   stream._flush = function (cb) {
     var actual = hash.digest("hex").toLowerCase().trim()
     if (actual === expected) return cb(null)
-    cb(new Error(
+    var err = new Error(
         'shasum check failed for:\n'
       + '  Expected: ' + expected + '\n'
-      + '  Actual:   ' + actual))
+      + '  Actual:   ' + actual)
+    err.expected = expected
+    err.actual = actual
+    cb(err)
     this.push(null)
   }
   return stream
